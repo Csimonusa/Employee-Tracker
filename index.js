@@ -1,4 +1,4 @@
-const db = require('./db')
+const db = require('./db/dbQueries')
 const inquirer = require('inquirer')
 const consoleTable = require('console.table')
 
