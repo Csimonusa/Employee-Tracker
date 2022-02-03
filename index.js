@@ -148,7 +148,70 @@ function addRole() {
 }
 
 function addEmployee() {
+    inquirer
+        .prompt([
+            {
+                message: 'What is the employees first name?',
+                name: 'first_name'
+            },
+            {
+                message: 'What is the employees last name?',
+                name: 'last_name'
+            },
+        ]).then(res => {
+            let firstName = res.first_name
+            let lastName = res.last_name
 
+            db.findAllRoles()
+            .then(([rows]) => {
+                let roles = rows
+                const roleList = roles.map(({id, title}) => ({
+                    name: title,
+                    value:id
+                }))
+                
+                inquirer
+                    .prompt([
+                        {
+                            type: 'list',
+                            message: 'What is the employees role?',
+                            name: 'roleId',
+                            choices: [roleList]
+                        }
+                    ]).then(res => {
+                        let roleId = res.roleId
+                        
+                        db.findAllEmployees()
+                        .then(([rows]) => {
+                            let employees = rows
+                            const managerList = employees.map(({id, first_name, last_name}) => ({
+                                name: `${first_name} ${last_name}`,
+                                value: id
+                            }))
+
+                            managerList.unshift({name:'none', value: null})
+
+                            inquirer
+                                .prompt([
+                                    {
+                                        type: 'list',
+                                        message: 'Who is the employees manager?',
+                                        name: 'managerId',
+                                        choices: [managerList]
+                                    }
+                                ]).then(res => {
+                                    let employee = {
+                                        manager_id: res.manager_id,
+                                        role_id: res.roleId,
+                                        first_name: firstName,
+                                        last_name: lastName
+                                    }
+                                    db.createEmployee(employee)
+                                }).then(() => main())
+                        })
+                    })
+            })
+        })
 }
 
 function updateEmployeeRole() {
