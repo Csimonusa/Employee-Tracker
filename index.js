@@ -217,7 +217,7 @@ function addEmployee() {
 function updateEmployeeRole() {
     db.findAllEmployees()
     .then(([rows]) => {
-        let employees = rows
+        let employee = rows
         const employeeList = employee.map(({id, first_name, last_name}) => ({
             name: `${first_name} ${last_name}`,
             value: id
