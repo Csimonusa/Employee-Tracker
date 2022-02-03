@@ -215,6 +215,44 @@ function addEmployee() {
 }
 
 function updateEmployeeRole() {
+    db.findAllEmployees()
+    .then(([rows]) => {
+        let employees = rows
+        const employeeList = employee.map(({id, first_name, last_name}) => ({
+            name: `${first_name} ${last_name}`,
+            value: id
+        }))
+
+        inquirer    
+            .prompt([
+                {
+                    type: 'list',
+                    message: 'Which employees role do you want to update?',
+                    name: 'employeeId',
+                    choices: [employeeList]
+                }
+            ]).then(res => {
+                let employeeId = res.employeeId
+                db.findAllRoles()
+                .then(([rows]) => {
+                    let roles = rows
+                    const roleList = roles.map(({id, title}) => ({
+                        name: title,
+                        value: id
+                    }))
+
+                    inquirer
+                        .prompt([
+                            {
+                                type: 'list',
+                                message: 'what role do you want to give to your employee?',
+                                name: 'roleId',
+                                choices: [roleList]
+                            }
+                        ]).then(res => db.updateEmployeeRole(employeeId, res.roleId)).then(() => main())
+                })
+            })
+    })
 
 }
 
