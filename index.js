@@ -217,3 +217,7 @@ function addEmployee() {
 function updateEmployeeRole() {
 
 }
+
+function quit() {
+    process.exit()
+}
