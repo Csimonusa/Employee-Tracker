@@ -101,3 +101,29 @@ function viewEmployees() {
         console.table(employees)
     }).then(() => main())
 }
+
+function addDepartment() {
+    inquirer
+        .prompt([
+            {
+                message: 'Name of department?',
+                name: 'name'
+            }
+        ]).then(res => {
+            let name = res
+            db.createDepartment(name)
+            .then(() => main())
+        })
+}
+
+function addRole() {
+
+}
+
+function addEmployee() {
+
+}
+
+function updateEmployeeRole() {
+
+}
