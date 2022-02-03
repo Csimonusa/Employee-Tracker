@@ -18,8 +18,8 @@ class DB {
     }
 
     findAllDepartments() {
-        return this.connection.promise.query(
-            'SELECT department.id, department.name FROM department;'
+        return this.connection.promise().query(
+            "SELECT department.id, department.name FROM department;"
         )
     }
 
@@ -38,7 +38,7 @@ class DB {
     updateEmployeeRole(employeeId, roleId) {
         return this.connection.promise().query(
             'UPDATE employee SET manager_id = ? WHERE id = ?',
-            [managerId, employeeId]
+            [roleId, employeeId]
         )
     }
 }

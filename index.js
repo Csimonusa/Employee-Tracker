@@ -43,7 +43,7 @@ main = () => {
                         value: 'quit'
                     }
                 ]
-            }
+            },
         ]).then(res => {
             let choice = res.choice
 
@@ -139,7 +139,7 @@ function addRole() {
                     type: 'list',
                     message: 'What department do you want to add this role to?',
                     name: 'department_id',
-                    choices: [departmentsList]
+                    choices: departmentsList
                 }
             ]).then(role => {
                 db.createRole(role).then(() => main())
@@ -167,7 +167,7 @@ function addEmployee() {
                 let roles = rows
                 const roleList = roles.map(({id, title}) => ({
                     name: title,
-                    value:id
+                    value: id
                 }))
                 
                 inquirer
@@ -176,7 +176,7 @@ function addEmployee() {
                             type: 'list',
                             message: 'What is the employees role?',
                             name: 'roleId',
-                            choices: [roleList]
+                            choices: roleList
                         }
                     ]).then(res => {
                         let roleId = res.roleId
@@ -197,12 +197,12 @@ function addEmployee() {
                                         type: 'list',
                                         message: 'Who is the employees manager?',
                                         name: 'managerId',
-                                        choices: [managerList]
+                                        choices: managerList
                                     }
                                 ]).then(res => {
                                     let employee = {
-                                        manager_id: res.manager_id,
-                                        role_id: res.roleId,
+                                        manager_id: res.managerId,
+                                        role_id: roleId,
                                         first_name: firstName,
                                         last_name: lastName
                                     }
@@ -229,7 +229,7 @@ function updateEmployeeRole() {
                     type: 'list',
                     message: 'Which employees role do you want to update?',
                     name: 'employeeId',
-                    choices: [employeeList]
+                    choices: employeeList
                 }
             ]).then(res => {
                 let employeeId = res.employeeId
@@ -247,7 +247,7 @@ function updateEmployeeRole() {
                                 type: 'list',
                                 message: 'what role do you want to give to your employee?',
                                 name: 'roleId',
-                                choices: [roleList]
+                                choices: roleList
                             }
                         ]).then(res => db.updateEmployeeRole(employeeId, res.roleId)).then(() => main())
                 })
