@@ -117,7 +117,34 @@ function addDepartment() {
 }
 
 function addRole() {
+    db.findAllDepartments()
+    .then(([rows]) => {
+        let departments = rows
+        const departmentsList = departments.map(({id, name}) => ({
+            name: name,
+            value: id
+        }))
 
+        inquirer
+            .prompt([
+                {
+                    message: 'name of role?',
+                    name: 'title'
+                },
+                {
+                    message: 'Salary for this role?',
+                    name: 'salary'
+                },
+                {
+                    type: 'list',
+                    message: 'What department do you want to add this role to?',
+                    name: 'department_id',
+                    choices: [departmentsList]
+                }
+            ]).then(role => {
+                db.createRole(role).then(() => main())
+            })
+    })
 }
 
 function addEmployee() {
