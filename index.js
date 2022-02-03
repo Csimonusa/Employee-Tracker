@@ -83,3 +83,12 @@ function viewDepartments() {
         console.table(departments)
     }).then(() => main())
 }
+
+function viewRoles() {
+    db.findAllRoles()
+    .then(([rows]) => {
+        let roles = rows
+        console.log('\n')
+        console.table(roles)
+    }).then(() => main())
+}
