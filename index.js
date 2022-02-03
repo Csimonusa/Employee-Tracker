@@ -37,8 +37,40 @@ main = () => {
                     {
                         name: 'Update an employee role',
                         value: 'update_employee_role'
+                    },
+                    {
+                        name: 'Quit',
+                        value: 'quit'
                     }
                 ]
             }
-        ])
+        ]).then(res => {
+            let choice = res.choice
+
+            switch(choice) {
+                case 'view_departments':
+                    viewDepartments()
+                    break
+                case 'view_roles':
+                    viewRoles()
+                    break
+                case 'view_employees':
+                    viewEmployees()
+                    break
+                case 'add_department':
+                    addDepartment()
+                    break
+                case 'add_role':
+                    addRole()
+                    break
+                case 'add_employee':
+                    addEmployee()
+                    break
+                case 'update_employee_role':
+                    updateEmployeeRole()
+                    break
+                default:
+                    quit()
+            }
+        })
 }
